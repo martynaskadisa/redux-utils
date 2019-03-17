@@ -23,7 +23,7 @@ describe('actions', () => {
             expect(actionCreator(undefined, meta).meta).toEqual(meta);
         })
 
-        it('should create action which stringifies to provided `type`', () => {
+        it('should create action creator which stringifies to provided `type`', () => {
             const type = 'test-type';
             const actionCreator = createActionCreator(type);
 

@@ -1,4 +1,5 @@
-import { createReducer } from './reducers';
+import { createReducer, reduce } from './reducers';
+import { createActionCreator, Action } from './actions';
 
 describe('reducers', () => {
     describe('#createReducer', () => {
@@ -21,5 +22,15 @@ describe('reducers', () => {
 
             expect(result).toEqual(2);
         });
+    });
+
+    describe('#reduce', () => {
+        it('should create reducers map by action type and reducer', () => {
+            const actionCreator = createActionCreator<number>('ADD');
+            const add = (state: number, action: Action<number, any>) => state + action.payload;
+            const result = reduce(actionCreator, add);
+
+            expect(result).toEqual({ [actionCreator.toString()]: add });
+        })
     });
 })

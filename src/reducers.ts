@@ -1,4 +1,4 @@
-import { ActionCreator, Action, createActionCreator } from './actions';
+import { ActionCreator, Action } from './actions';
 import { AnyAction } from 'redux';
 
 export type Reducer<TState, TAction extends AnyAction> = (state: TState, action: TAction) => TState;
@@ -9,9 +9,7 @@ export const reduce = <TState, TPayload, TMeta>(
 ): Record<
     string, 
     Reducer<TState, Action<TPayload, TMeta>>
-> => ({
-    [actionCreator.toString()]: reducer
-})
+> => ({ [actionCreator.toString()]: reducer })
 
 export const createReducer = <TState>(
     defaultState: TState, 
