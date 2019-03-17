@@ -3,23 +3,33 @@ import { AnyAction } from 'redux';
 
 type Reducer<TState, TAction extends AnyAction> = (state: TState, action: TAction) => TState;
 
+
 const reduce = <TState, TPayload, TMeta>(
     actionCreator: ActionCreator<TPayload, TMeta>,
     reducer: Reducer<TState, Action<TPayload, TMeta>>
-) => (state: TState, action: Action<TPayload, TMeta>) => {
-    if (actionCreator.toString() === action.type) {
-        return reducer(state, action);
-    }
-
-    return state;
+): Record<
+    string, 
+    Reducer<TState, Action<TPayload, TMeta>>
+> => {
+    return {
+        [actionCreator.toString()]: reducer
+    };
 }
 
 export const createReducer = <TState>(
     defaultState: TState, 
-    ...reducers: Array<Reducer<TState, any>>
-) => (state: TState, action: AnyAction): TState => {
-    return defaultState
-};
+    ...reducers: Array<Record<string, Reducer<TState, any>>>
+) => {
+    const reducersMap = reducers.reduce((prev, next) => ({ ...prev, ...next }));
+
+    return (state: TState = defaultState, action: AnyAction): TState => {
+      if (reducersMap.hasOwnProperty(action.type)) {
+        reducersMap[action.type](state, action);
+      }
+
+      return state;
+    }
+}
 
 
 const setIds = createActionCreator<number[]>('SET_IDS');
