@@ -5,7 +5,9 @@ export type Reducer<TState, TAction extends AnyAction> = (state: TState, action:
 export const reduce = <TState, TAction extends AnyAction>(
   actionCreator: (...args: any[]) => TAction,
   reducer: Reducer<TState, TAction>
-): Record<string, Reducer<TState, TAction>> => ({ [actionCreator.toString()]: reducer })
+): Record<string, Reducer<TState, TAction>> => ({
+  [actionCreator.toString()]: reducer
+})
 
 export const createReducer = <TState>(
   defaultState: TState,

@@ -49,7 +49,7 @@
       ".(ts|tsx)": "ts-jest"
     },
     "testEnvironment": "node",
-    "testRegex": "\\.(test|spec)\\.(ts|tsx|js)$",
+    "testRegex": "\\.(test|spec)\\.(ts|tsx)$",
     "moduleFileExtensions": [
       "ts",
       "tsx",
@@ -96,8 +96,10 @@
     "jest-config": "^23.6.0",
     "lint-staged": "^8.0.0",
     "lodash.camelcase": "^4.3.0",
-    "prettier": "^1.14.3",
+    "prettier": "^1.16.4",
     "prompt": "^1.0.0",
+    "redux": "^4.0.1",
+    "redux-saga": "^1.0.2",
     "replace-in-file": "^3.4.2",
     "rimraf": "^2.6.2",
     "rollup": "^0.67.0",
@@ -111,9 +113,10 @@
     "travis-deploy-once": "^5.0.9",
     "ts-jest": "^23.10.2",
     "ts-node": "^7.0.1",
-    "tslint": "^5.11.0",
-    "tslint-config-prettier": "^1.15.0",
+    "tslint": "^5.14.0",
+    "tslint-config-prettier": "^1.18.0",
     "tslint-config-standard": "^8.0.1",
+    "tslint-plugin-prettier": "^2.0.1",
     "typescript": "^3.3.3333"
   },
   "peerDependencies": {

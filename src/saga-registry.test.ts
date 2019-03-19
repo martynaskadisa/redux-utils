@@ -1,91 +1,91 @@
-import { applyMiddleware, createStore } from "redux";
-import createSagaMiddleware from "redux-saga";
-import { take } from "redux-saga/effects";
-import { createSagaRegistry } from "./saga-registry";
+import { applyMiddleware, createStore } from 'redux'
+import createSagaMiddleware from 'redux-saga'
+import { take } from 'redux-saga/effects'
+import { createSagaRegistry } from './saga-registry'
 
-const stubReducer = () => true;
+const stubReducer = () => true
 
-describe("#createSagaRegistry", () => {
-  describe("#add", () => {
-    it("should add new saga", () => {
-      const fn = jest.fn();
+describe('#createSagaRegistry', () => {
+  describe('#add', () => {
+    it('should add new saga', () => {
+      const fn = jest.fn()
       function* saga() {
-        fn();
-        yield;
+        fn()
+        yield
       }
 
-      const sagaMiddleware = createSagaMiddleware();
-      createStore(stubReducer, applyMiddleware(sagaMiddleware));
-      const sagaRegistry = createSagaRegistry(sagaMiddleware);
+      const sagaMiddleware = createSagaMiddleware()
+      createStore(stubReducer, applyMiddleware(sagaMiddleware))
+      const sagaRegistry = createSagaRegistry(sagaMiddleware)
 
-      sagaRegistry.add(saga);
+      sagaRegistry.add(saga)
 
-      expect(fn).toHaveBeenCalled();
-    });
+      expect(fn).toHaveBeenCalled()
+    })
 
-    it("should not add already existing saga", () => {
-      const fn = jest.fn();
+    it('should not add already existing saga', () => {
+      const fn = jest.fn()
 
       function* saga() {
-        fn();
-        yield;
+        fn()
+        yield
       }
 
-      const sagaMiddleware = createSagaMiddleware();
-      createStore(stubReducer, applyMiddleware(sagaMiddleware));
-      const sagaRegistry = createSagaRegistry(sagaMiddleware);
+      const sagaMiddleware = createSagaMiddleware()
+      createStore(stubReducer, applyMiddleware(sagaMiddleware))
+      const sagaRegistry = createSagaRegistry(sagaMiddleware)
 
-      sagaRegistry.add(saga);
-      sagaRegistry.add(saga);
+      sagaRegistry.add(saga)
+      sagaRegistry.add(saga)
 
-      expect(fn).toHaveBeenCalledTimes(1);
-    });
-  });
+      expect(fn).toHaveBeenCalledTimes(1)
+    })
+  })
 
-  describe("#remove", () => {
-    it("should remove existing saga", () => {
-      const fn = jest.fn();
-      const actionType = "TEST";
+  describe('#remove', () => {
+    it('should remove existing saga', () => {
+      const fn = jest.fn()
+      const actionType = 'TEST'
 
       function* saga() {
         while (true) {
-          yield take(actionType);
+          yield take(actionType)
 
-          fn();
+          fn()
         }
       }
 
-      const sagaMiddleware = createSagaMiddleware();
-      const store = createStore(stubReducer, applyMiddleware(sagaMiddleware));
-      const sagaRegistry = createSagaRegistry(sagaMiddleware);
+      const sagaMiddleware = createSagaMiddleware()
+      const store = createStore(stubReducer, applyMiddleware(sagaMiddleware))
+      const sagaRegistry = createSagaRegistry(sagaMiddleware)
 
-      sagaRegistry.add(saga);
-      sagaRegistry.remove(saga);
-      store.dispatch({ type: actionType });
+      sagaRegistry.add(saga)
+      sagaRegistry.remove(saga)
+      store.dispatch({ type: actionType })
 
-      expect(fn).not.toHaveBeenCalled();
-    });
+      expect(fn).not.toHaveBeenCalled()
+    })
 
     it('should do nothing when saga does not exist', () => {
-        const fn = jest.fn();
-        const actionType = "TEST";
+      const fn = jest.fn()
+      const actionType = 'TEST'
 
-        function* saga() {
-            while (true) {
-            yield take(actionType);
+      function* saga() {
+        while (true) {
+          yield take(actionType)
 
-            fn();
-            }
+          fn()
         }
+      }
 
-        const sagaMiddleware = createSagaMiddleware();
-        const store = createStore(stubReducer, applyMiddleware(sagaMiddleware));
-        const sagaRegistry = createSagaRegistry(sagaMiddleware);
+      const sagaMiddleware = createSagaMiddleware()
+      const store = createStore(stubReducer, applyMiddleware(sagaMiddleware))
+      const sagaRegistry = createSagaRegistry(sagaMiddleware)
 
-        sagaRegistry.remove(saga);
-        store.dispatch({ type: actionType });
+      sagaRegistry.remove(saga)
+      store.dispatch({ type: actionType })
 
-        expect(fn).not.toHaveBeenCalled();
+      expect(fn).not.toHaveBeenCalled()
     })
-  });
-});
+  })
+})

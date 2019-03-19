@@ -1,6 +1,15 @@
 {
   "extends": [
-    "tslint-config-standard",
+    "tslint:recommended",
+    "tslint-plugin-prettier",
     "tslint-config-prettier"
-  ]
+  ],
+  "rules": {
+    "prettier": [true, {
+      "singleQuote": true
+    }],
+    "interface-name": false,
+    "object-literal-sort-keys": false,
+    "no-inferrable-types": true
+  }
 }
