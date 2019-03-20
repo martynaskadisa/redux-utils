@@ -1,25 +1,21 @@
-export interface Action<TPayload = undefined, TMeta = any> {
-  type: string;
-  payload: TPayload;
-  meta: TMeta;
+import { Action } from 'redux';
+
+export interface ActionWithPayload<T, P> extends Action<T> {
+  payload: P;
 }
 
-export type ActionCreator<
-  TPayload = undefined,
-  TMeta = any
-> = TPayload extends undefined
-  ? (payload?: TPayload, meta?: TMeta) => Action<TPayload, TMeta>
-  : (payload: TPayload, meta?: TMeta) => Action<TPayload, TMeta>;
-
-export function createActionCreator<TPayload = undefined, TMeta = any>(
+export function createActionCreator(
   type: string
-): ActionCreator<TPayload, TMeta>;
+): (payload?: never) => Action<string>;
+
+export function createActionCreator<TPayload>(
+  type: string
+): (payload: TPayload) => ActionWithPayload<string, TPayload>;
 
 export function createActionCreator(type: string) {
-  const actionCreator = (payload: any, meta: any) => ({
+  const actionCreator = (payload: any) => ({
     type,
-    payload,
-    meta
+    payload
   });
 
   actionCreator.toString = () => type;

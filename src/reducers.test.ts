@@ -1,5 +1,5 @@
 import { Reducer } from 'redux';
-import { Action, createActionCreator } from './actions';
+import { ActionWithPayload, createActionCreator } from './actions';
 import { createReducer, reduce } from './reducers';
 
 describe('reducers', () => {
@@ -75,7 +75,7 @@ describe('reducers', () => {
 
     it('should create reducers map by action type and reducer', () => {
       const actionCreator = createActionCreator<number>('ADD');
-      const add = (state: number, action: Action<number, any>) =>
+      const add = (state: number, action: ActionWithPayload<string, number>) =>
         state + action.payload;
       const result = reduce(actionCreator, add);
 

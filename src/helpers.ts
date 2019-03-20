@@ -1,18 +1,21 @@
-import { Action } from './actions';
+import { ActionWithPayload } from './actions';
 
-export const set = <T>(_: any, action: Action<T, any>) => action.payload;
+export const set = <TPayload>(
+  _: any,
+  action: ActionWithPayload<any, TPayload>
+) => action.payload;
 
 export const merge = <TState extends object, TPayload extends object>(
   state: TState,
-  action: Action<TPayload, any>
+  action: ActionWithPayload<any, TPayload>
 ) => ({ ...state, ...action.payload });
 
-export const append = <T, P>(state: T[], action: Action<P[], any>) => [
-  ...state,
-  ...action.payload
-];
+export const append = <TState, TPayload>(
+  state: ReadonlyArray<TState>,
+  action: ActionWithPayload<any, ReadonlyArray<TPayload>>
+) => [...state, ...action.payload];
 
-export const prepend = <T, P>(state: T[], action: Action<P[], any>) => [
-  ...action.payload,
-  ...state
-];
+export const prepend = <TState, TPayload>(
+  state: ReadonlyArray<TState>,
+  action: ActionWithPayload<any, ReadonlyArray<TPayload>>
+) => [...action.payload, ...state];
