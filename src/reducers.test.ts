@@ -1,8 +1,33 @@
+import { Reducer } from 'redux';
 import { Action, createActionCreator } from './actions';
 import { createReducer, reduce } from './reducers';
 
 describe('reducers', () => {
   describe('#createReducer', () => {
+    describe('type checks', () => {
+      it('should infer `state` from `defaultState`', () => {
+        const numberReducer: Reducer<number> = createReducer(5);
+        const stringReducer: Reducer<string> = createReducer('test');
+        const objectReducer: Reducer<{ foo: boolean }> = createReducer({
+          foo: true
+        });
+
+        expect(numberReducer);
+        expect(stringReducer);
+        expect(objectReducer);
+      });
+
+      it('should infer `state` inside reducers map object', () => {
+        createReducer(
+          { testProperty: true },
+          {
+            foo: state => ({ testProperty: state.testProperty }),
+            bar: state => ({ testProperty: state.testProperty })
+          }
+        );
+      });
+    });
+
     it('should create reducer with provided default state', () => {
       const defaultState = 'test';
       const reducer = createReducer(defaultState);
@@ -25,6 +50,29 @@ describe('reducers', () => {
   });
 
   describe('#reduce', () => {
+    describe('type checks', () => {
+      it('should infer action type from action creator', () => {
+        const testActionCreator = () => ({ type: 'test', payload: 5 });
+
+        reduce(testActionCreator, (_, action) => action.payload);
+      });
+
+      it('should infer `state` from `createReducer`', () => {
+        const actionCreator2 = () => ({ type: 'test-2' });
+        const actionCreator1 = () => ({ type: 'test-1' });
+
+        createReducer(
+          { testProperty: 5 },
+          reduce(actionCreator1, state => ({
+            testProperty: state.testProperty
+          })),
+          reduce(actionCreator2, state => ({
+            testProperty: state.testProperty
+          }))
+        );
+      });
+    });
+
     it('should create reducers map by action type and reducer', () => {
       const actionCreator = createActionCreator<number>('ADD');
       const add = (state: number, action: Action<number, any>) =>
