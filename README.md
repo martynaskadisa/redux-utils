@@ -1,12 +1,14 @@
 # redux-utils
 
+[![minified size](https://badgen.net/bundlephobia/min/@reduxify/utils)](https://bundlephobia.com/result?p=@reduxify/utils)
+[![minzipped size](https://badgen.net/bundlephobia/minzip/@reduxify/utils)](https://bundlephobia.com/result?p=@reduxify/utils)
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 <!-- [![Greenkeeper badge](https://badges.greenkeeper.io/martynaskadisa/redux-utils.svg)](https://greenkeeper.io/) -->
 <!-- [![Travis](https://img.shields.io/travis/martynaskadisa/redux-utils.svg)](https://travis-ci.org/martynaskadisa/redux-utils) -->
 <!-- [![Coveralls](https://img.shields.io/coveralls/martynaskadisa/redux-utils.svg)](https://coveralls.io/github/martynaskadisa/redux-utils) -->
 <!-- [![Dev Dependencies](https://david-dm.org/martynaskadisa/redux-utils/dev-status.svg)](https://david-dm.org/martynaskadisa/redux-utils?type=dev) -->
 
-Type-safe redux utilities to make your life easier
+Tiny type-safe redux utilities to make your life easier
 
 ## Installing
 
@@ -28,8 +30,6 @@ import { createActionCreator } from '@reduxify/utils'
 const add = createActionCreator<number>('ADD');
 
 dispatch(add(5)) //=> { type: 'ADD', payload: 5 }
-
-
 
 const openCalendar = createActionCreator('OPEN_CALENDAR');
 
