@@ -3,7 +3,7 @@ export * from './actions';
 /* istanbul ignore next */
 export * from './reducers';
 /* istanbul ignore next */
-export * from './reducers';
+export * from './helpers';
 /* istanbul ignore next */
 export * from './reducer-registry';
 /* istanbul ignore next */

@@ -1,6 +1,6 @@
 {
   "name": "@reduxify/utils",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "",
   "keywords": [],
   "main": "dist/redux-utils.umd.js",
