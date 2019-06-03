@@ -1,5 +1,6 @@
 # redux-utils
 
+[![Build Status](https://travis-ci.com/martynaskadisa/redux-utils.svg?branch=master)](https://travis-ci.com/martynaskadisa/redux-utils)
 [![minified size](https://badgen.net/bundlephobia/min/@reduxify/utils)](https://bundlephobia.com/result?p=@reduxify/utils)
 [![minzipped size](https://badgen.net/bundlephobia/minzip/@reduxify/utils)](https://bundlephobia.com/result?p=@reduxify/utils)
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
