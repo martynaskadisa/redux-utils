@@ -37,23 +37,51 @@ const openCalendar = createActionCreator('OPEN_CALENDAR');
 dispatch(openCalendar()) //=> { type: 'OPEN_CALENDAR' }
 ```
 
+This utility has one extra feature - `toString()` method returns action's type. So action creator can be used everywhere instead of an action type constant, even in reducers or sagas:
+
+```ts
+import { createActionCreator } from '@reduxify/utils';
+
+const openDropdown = createActionCreator<boolean>('OPEN_DROPDOWN');
+
+console.log(openDropdown) //=> 'OPEN_DROPDOWN'
+
+
+// Example reducer
+const reducer = (state, action) => {
+  switch(action.type) {
+    case openDropdown.toString():
+      return action.payload;
+    default:
+      return state;
+  }
+}
+
+// Example saga
+function* saga() {
+   const action = yield take(openDropdown);
+}
+```
+
 
 ### createReducer
 
 `createReducer<S, A>(defaultState: S, ...reducersMap: Array<Record<string, Reducer<S, any>>>)`
+
+Reducer creator. Accepts default state as first argument and reducers map as n-th argument.
 
 ```ts
 import { createActionCreator, createReducer, reduce } from '@reduxify/utils';
 
 const openCalendar = createActionCreator('OPEN_CALENDAR');
 const closeCalendar = createActionCreator('OPEN_CALENDAR');
-const setCount = createActionCreator<number>('SET_COUNT');
+const incrementBy = createActionCreator<number>('INCREMENT_BY');
 
 const reducer = createReducer(
     { open: false, count: 0 },
     reduce(openCalendar, (state, action) => ({ ...state, open: true })),
     reduce(closeCalendar, (state, action) => ({ ...state, open: false })),
-    reduce(setCount, (state, action) => ({ ...state, count: state.count + action.payload }))
+    reduce(incrementBy, (state, action) => ({ ...state, count: state.count + action.payload }))
 )
 ```
 
@@ -85,8 +113,86 @@ const reducer = createReducer(true,
   reducer: Reducer<S, A>
 ): Record<string, Reducer<S, A>>`
 
-Reduce actions with full type information from action creators.
+Reduce actions with full type information from action creators. This utility essentially creates a reducers map object. It's main purpose is to provide full type information from action creator for type safe reducers.
 
+```ts
+import { reduce, createActionCreator } from '@reduxify/utils';
+
+const add = createActionCreator<number>('ADD');
+
+const reducersMap = reduce(add, (state, action) => state + action.payload) 
+// reducersMap = { 'ADD': (state, action) => state + action.payload }
+```
+
+### Helpers
+
+#### set
+
+```
+set(state: any, action: Action<Payload>) => Payload
+```
+
+Sets action's payload unconditionally
+
+```ts
+import { createActionCreator, createReducer, reduce, set } from '@reduxify/utils';
+
+const setTitle = createActionCreator<string>('SET_TITLE');
+
+const reducer = createReducer('', 
+  reduce(setTitle, set)
+);
+
+// Initial state:
+// ''
+
+dispatch(setTitle('Awesome title'));
+
+// Updated state:
+// 'Awesome title'
+
+```
+
+#### merge
+
+```
+merge(state: object, action: Action<object>) => object
+```
+
+Spreads action's payload over state
+
+```ts
+import { createActionCreator, createReducer, reduce, merge } from '@reduxify/utils';
+
+interface User {
+  name: string;
+  surname: string;
+  address: string;
+}
+
+const updateUser = createActionCreator<Partial<User>>('UPDATE_USER');
+
+const reducer = createReducer({ name: 'Jon', surname: 'Snow', address: `Night's watch` },
+  reduce(updateUser, merge)
+);
+
+// Initial state:
+// {
+//   name: 'Jon',
+//   surname: 'Snow',
+//   address: `Night's watch`
+// }
+
+dispatch(updateUser({ address: 'Winterfell' });
+
+// Updated state:
+// {
+//   name: 'Jon',
+//   surname: 'Snow',
+//   address: 'Winterfell'
+// }
+
+```
 
 ## Licence
 
