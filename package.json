@@ -1,8 +1,11 @@
 {
   "name": "@reduxify/utils",
   "version": "0.1.0",
-  "description": "",
-  "keywords": [],
+  "description": "Tiny type-safe redux utilities to make your life easier",
+  "keywords": [
+    "redux",
+    "typescript"
+  ],
   "main": "dist/redux-utils.umd.js",
   "module": "dist/redux-utils.es5.js",
   "typings": "dist/types/redux-utils.d.ts",
@@ -12,7 +15,10 @@
   "author": "Martynas Kadiša <8273932+martynaskadisa@users.noreply.github.com>",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/martynaskadisa/redux-utils.git"
+  },
+  "bugs": {
+    "url": "https://github.com/martynaskadisa/redux-utils/issues"
   },
   "license": "MIT",
   "engines": {
