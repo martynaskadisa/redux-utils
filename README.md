@@ -21,9 +21,9 @@ yarn add @reduxify/utils
 
 ### createActionCreator
 
-`createActionCreator<T>(type: string): (payload: T) => { type: string, payload: T }`
+`createActionCreator<P, M>(type: string): (payload: P, meta: M) => { type: string, payload: P, meta: M }`
 
-Action creator factory. 
+Action creator factory. Accepts `type` as first argument and returns an action creator which accepts two arguments - `payload` and `meta`.
 
 ```ts
 import { createActionCreator } from '@reduxify/utils'
@@ -35,6 +35,10 @@ dispatch(add(5)) //=> { type: 'ADD', payload: 5 }
 const openCalendar = createActionCreator('OPEN_CALENDAR');
 
 dispatch(openCalendar()) //=> { type: 'OPEN_CALENDAR' }
+
+const throttledAdd = createActionCreator<number, { throttle: number }>('ADD');
+
+dispatch(throttledAdd(5, { throttle: 100 })) //=> { type: 'ADD', payload: 5, meta: { throttle: 100 }}
 ```
 
 This utility has one extra feature - `toString()` method returns action's type. So action creator can be used everywhere instead of an action type constant, even in reducers or sagas:

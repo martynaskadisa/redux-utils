@@ -16,6 +16,13 @@ describe('actions', () => {
       expect(actionCreator(payload).payload).toEqual(payload);
     });
 
+    it('should create action with provided `meta`', () => {
+      const meta = 'test-meta';
+      const actionCreator = createActionCreator<undefined, string>('test-type');
+
+      expect(actionCreator(undefined, meta).meta).toEqual(meta);
+    });
+
     it('should create action creator which stringifies to provided `type`', () => {
       const type = 'test-type';
       const actionCreator = createActionCreator(type);
